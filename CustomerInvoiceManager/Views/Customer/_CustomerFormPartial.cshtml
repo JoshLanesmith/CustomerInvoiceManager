@@ -1,0 +1,52 @@
+﻿@model CustomerViewModel
+
+<div class="form-group">
+    <label class="form-label" asp-for="Customer.Name"></label>
+    <span class="text-danger" asp-validation-for="Customer.Name"></span>
+    <input class="form-control @(Html.ViewData.ModelState["Name"]?.Errors.Count > 0 ? "is-invalid bg-light" : "")" type="text" asp-for="Customer.Name" />
+</div>
+<div class="form-group">
+    <label class="form-label" asp-for="Customer.Address1"></label>
+    <span class="text-danger" asp-validation-for="Customer.Address1"></span>
+    <input class="form-control @(Html.ViewData.ModelState["Address1"]?.Errors.Count > 0 ? "is-invalid bg-light" : "")" type="text" asp-for="Customer.Address1" />
+</div>
+<div class="form-group">
+    <label class="form-label" asp-for="Customer.Address2"></label>
+    <span class="text-danger" asp-validation-for="Customer.Address2"></span>
+    <input class="form-control" type="text" asp-for="Customer.Address2" />
+</div>
+<div class="form-group">
+    <label class="form-label" asp-for="Customer.City"></label>
+    <span class="text-danger" asp-validation-for="Customer.City"></span>
+    <input class="form-control @(Html.ViewData.ModelState["City"]?.Errors.Count > 0 ? "is-invalid bg-light" : "")" type="text" asp-for="Customer.City" />
+</div>
+<div class="form-group">
+    <label class="form-label" asp-for="Customer.ProvinceOrState"></label>
+    <span class="text-danger" asp-validation-for="Customer.ProvinceOrState"></span>
+    <input class="form-control @(Html.ViewData.ModelState["ProvinceOrState"]?.Errors.Count > 0 ? "is-invalid bg-light" : "")" type="text" asp-for="Customer.ProvinceOrState" />
+</div>
+<div class="form-group">
+    <label class="form-label" asp-for="Customer.ZipOrPostalCode"></label>
+    <span class="text-danger" asp-validation-for="Customer.ZipOrPostalCode"></span>
+    <input class="form-control @(Html.ViewData.ModelState["ZipOrPostalCode"]?.Errors.Count > 0 ? "is-invalid bg-light" : "")" type="text" asp-for="Customer.ZipOrPostalCode" />
+</div>
+<div class="form-group">
+    <label class="form-label" asp-for="Customer.Phone"></label>
+    <span class="text-danger" asp-validation-for="Customer.Phone"></span>
+    <input class="form-control @(Html.ViewData.ModelState["Phone"]?.Errors.Count > 0 ? "is-invalid bg-light" : "")" type="text" asp-for="Customer.Phone" />
+</div>
+<div class="form-group">
+    <label class="form-label" asp-for="Customer.ContactLastName"></label>
+    <span class="text-danger" asp-validation-for="Customer.ContactLastName"></span>
+    <input class="form-control" type="text" asp-for="Customer.ContactLastName" />
+</div>
+<div class="form-group">
+    <label class="form-label" asp-for="Customer.ContactFirstName"></label>
+    <span class="text-danger" asp-validation-for="Customer.ContactFirstName"></span>
+    <input class="form-control" type="text" asp-for="Customer.ContactFirstName" />
+</div>
+<div class="form-group">
+    <label class="form-label" asp-for="Customer.ContactEmail"></label>
+    <span class="text-danger" asp-validation-for="Customer.ContactEmail"></span>
+    <input class="form-control @(Html.ViewData.ModelState["ContactEmail"]?.Errors.Count > 0 ? "is-invalid bg-light" : "")" type="text" asp-for="Customer.ContactEmail" />
+</div>

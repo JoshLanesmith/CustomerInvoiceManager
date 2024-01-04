@@ -1,0 +1,133 @@
+﻿@model CustomerInvoiceViewModel
+@{
+	ViewData["Title"] = "Customer Invoices";
+	double? invoiceTotal = 0;
+	if (Model.ActiveInvoice.LineItems != null)
+	{
+		foreach (InvoiceLineItem lineItem in Model.ActiveInvoice.LineItems)
+		{
+			invoiceTotal = invoiceTotal + lineItem.Amount;
+		}
+	}
+}
+<div class="container">
+	<div class="row align-items-center">
+		<div class="col-7">
+			<h1>Invoices for @Model.Customer.Name</h1>
+		</div>
+		<div class="col-5">
+			<a asp-controller="Customer" asp-action="GetCustomers" asp-route-filterFrom="A" asp-route-filterTo="E">Return to A-E customers</a>
+		</div>
+	</div>
+
+	<div class="row text-secondary">
+		<div class="col-7">
+			<p>Address: @Model.Customer.Address1 @(string.IsNullOrEmpty(Model.Customer.Address2) ? "" : $"| {Model.Customer.Address2}")</p>
+		</div>
+		<div class="col-5">
+			<p>Terms: @(Model.ActiveInvoice.PaymentTerms != null ? Model.ActiveInvoice.PaymentTerms.DueDays + " Days" : "")</p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-7">
+			<p>Invoices:</p>
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>Invoice #</th>
+						<th>Due Date</th>
+						<th>Amount Paid</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (Invoice invoice in Model.Customer.Invoices)
+					{
+						<tr class="@(Model.ActiveInvoice == invoice ? "table-info" : "")">
+							<td> <a asp-controller="Customer" asp-action="GetCustomerInvoices" asp-route-customerId="@invoice.CustomerId" asp-route-invoiceId="@invoice.InvoiceId">@invoice.InvoiceId</a></td>
+							<td>@invoice.InvoiceDueDate?.ToString("d")</td>
+							<td>@invoice.PaymentTotal</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+			<h5 class="mt-2">New Invoice:</h5>
+			<form method="post" asp-controller="Customer" asp-action="AddInvoice" enctype="application/x-www-form-urlencoded">
+				<div class="row g-3 align-items-center">
+					<div class="col-auto">
+						<label class="col-form-label" asp-for="NewInvoice.InvoiceDate">Date: </label>
+					</div>
+					<div class="col-auto">
+						<input type="Date" class="form-control" asp-for="NewInvoice.InvoiceDate">
+					</div>
+				</div>
+				<div class="row g-3 align-items-center mt-1">
+					<div class="col-auto">
+						<label class="col-form-label" asp-for="NewInvoice.PaymentTermsId">Terms: </label>
+					</div>
+					<div class="col-auto">
+						<select asp-for="NewInvoice.PaymentTermsId" class="form-control">
+							@foreach (PaymentTerms term in Model.PaymentTerms)
+							{
+								<option value="@term.PaymentTermsId">@term.Description</option>
+							}
+						</select>
+					</div>
+				</div>
+				<input type="hidden" asp-for="NewInvoice.CustomerId" value="@Model.Customer.CustomerId">
+				<input type="hidden" asp-for="Customer.CustomerId">
+				<input type="hidden" asp-for="ActiveInvoice.InvoiceId">
+				<button type="submit" class="btn btn-primary mt-3">Add Invoice</button>
+
+			</form>
+		</div>
+		<div class="col-5">
+			<p>Line Items for Inv #@(Model.ActiveInvoice.InvoiceId):</p>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Description</th>
+						<th>Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (Model.ActiveInvoice.LineItems != null)
+					{
+						foreach (InvoiceLineItem lineItem in Model.ActiveInvoice.LineItems)
+						{
+							<tr>
+								<td>@lineItem.Description</td>
+								<td>@lineItem.Amount?.ToString("c")</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
+			<p>Total: @invoiceTotal?.ToString("c")</p>
+			<h5 class="mt-2">New Line Item:</h5>
+			<form method="post" asp-controller="Customer" asp-action="AddLineItem" enctype="application/x-www-form-urlencoded">
+				<div class="row g-3 align-items-center">
+					<div class="col-auto">
+						<label class="col-form-label" asp-for="NewLineItem.Description">Description: </label>
+					</div>
+					<div class="col-auto">
+						<input type="text" class="form-control" asp-for="NewLineItem.Description">
+					</div>
+				</div>
+				<div class="row g-3 align-items-center mt-1">
+					<div class="col-auto">
+						<label class="col-form-label" asp-for="NewLineItem.Amount">Amount: </label>
+					</div>
+					<div class="col-auto">
+						<input type="text" class="form-control" asp-for="NewLineItem.Amount">
+					</div>
+				</div>
+				<input type="hidden" asp-for="NewLineItem.InvoiceId" value="@Model.ActiveInvoice.InvoiceId">
+				<input type="hidden" asp-for="Customer.CustomerId">
+				<input type="hidden" asp-for="ActiveInvoice.InvoiceId">
+				<button type="submit" class="btn btn-primary mt-3">Add Line Item</button>
+
+			</form>
+		</div>
+	</div>
+</div>
