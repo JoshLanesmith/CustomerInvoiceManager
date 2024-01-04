@@ -31,3 +31,7 @@ SQL Server Management Studio
 </p>
 
 ## Images from the project :camera_flash:
+
+<img src="https://github.com/JoshLanesmith/CustomerInvoiceManager/blob/assets/InvMngr_1.JPG" alt="GamePlay" width="600" height="153"/>
+<img src="https://github.com/JoshLanesmith/CustomerInvoiceManager/blob/assets/InvMngr_2.JPG" alt="WinScreen" width="600" height="294"/>
+<img src="https://github.com/JoshLanesmith/CustomerInvoiceManager/blob/assets/InvMngr_3.JPG" alt="WinScreen" width="600" height="248"/>
